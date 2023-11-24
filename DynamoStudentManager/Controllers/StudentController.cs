@@ -14,20 +14,20 @@ namespace DynamoStudentManager.Controllers
         {
             _context = context;
         }
-        [HttpGet("{studentId}")]
+        [HttpGet("getbyid/{studentId}")]
         public async Task<IActionResult> GetById(int studentId)
         {
             var student = await _context.LoadAsync<Student>(studentId);
             if (student == null) return NotFound();
             return Ok(student);
         }
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllStudents()
         {
             var student = await _context.ScanAsync<Student>(default).GetRemainingAsync();
             return Ok(student);
         }
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> CreateStudent(Student studentRequest)
         {
             var student = await _context.LoadAsync<Student>(studentRequest.Id);
@@ -35,7 +35,7 @@ namespace DynamoStudentManager.Controllers
             await _context.SaveAsync(studentRequest);
             return Ok(studentRequest);
         }
-        [HttpDelete("{studentId}")]
+        [HttpDelete("delete/{studentId}")]
         public async Task<IActionResult> DeleteStudent(int studentId)
         {
             var student = await _context.LoadAsync<Student>(studentId);
@@ -43,7 +43,7 @@ namespace DynamoStudentManager.Controllers
             await _context.DeleteAsync(student);
             return NoContent();
         }
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateStudent(Student studentRequest)
         {
             var student = await _context.LoadAsync<Student>(studentRequest.Id);
