@@ -51,5 +51,11 @@ namespace DynamoStudentManager.Controllers
             await _context.SaveAsync(studentRequest);
             return Ok(studentRequest);
         }
+
+        [HttpGet("test")]
+        public async Task<IActionResult> GetMessage()
+        {
+            return Ok("Hello World");
+        }
     }
 }
